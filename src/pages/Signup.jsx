@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Navbar from "../components/Navbar";
 const Signup = () => {
     //Defining Variables
   const [firstname, setFirstname] = useState("");
@@ -35,7 +36,6 @@ let handleSubmit = async (e) => {
         // Handle the response here
         setSuccess("Signup successful!"); 
     } catch (e) {
-             // Display appropriate error message
       setError(e.response.data.error|| "An error occurred");
       console.log(e);
 
@@ -43,6 +43,7 @@ let handleSubmit = async (e) => {
 };
   return (
     <>
+    <Navbar />
       <div className="container">
         <h2>Signup</h2>
         <form onSubmit={handleSubmit}>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Cookies from 'js-cookie';
+import Navbar from "../components/Navbar";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +12,9 @@ const Login = () => {
     setError("");
     setSuccess("");
     e.preventDefault();
+
+
+
     try{const response = await axios.post('http://localhost:3001/users/login', 
     {
         email,
@@ -22,12 +26,22 @@ const Login = () => {
 
     setSuccess("Logged in!");
     }catch(e){
-        setError(e.response.data.error|| "An error occurred");
-        console.log(e);
+      if (e.response) {
+        // Server responded with a status outside the 2xx range
+        setError(e.response.data.error || "An error occurred");
+    } else if (e.request) {
+        // Request was made but no response was received (server might be down)
+        setError("Server is down, please try again later.");
+    } else {
+        // Something happened in setting up the request
+        setError("An error occurred while sending the request.");
+    }
+    console.log(e);
     }
   }
   return (
     <>
+    <Navbar />
       <div className="container">
       <h1>Login</h1>
         <form onSubmit={handleSubmit}>
